@@ -89,7 +89,7 @@ class SQSBatchClient:
             )
 
             results["Successful"].extend(response.get("Successful", []))
-            results["Failed"].extend((result for result in response.get("Failed", []) if result["SenderFault"]))
+            results["Failed"].extend(result for result in response.get("Failed", []) if result["SenderFault"])
             errors = {result["Id"]: result for result in response.get("Failed", []) if not result["SenderFault"]}
 
             if errors:
@@ -128,7 +128,7 @@ class SQSBatchClient:
             )
 
             results["Successful"].extend(response.get("Successful", []))
-            results["Failed"].extend((result for result in response.get("Failed", []) if result["SenderFault"]))
+            results["Failed"].extend(result for result in response.get("Failed", []) if result["SenderFault"])
             errors = {result["Id"]: result for result in response.get("Failed", []) if not result["SenderFault"]}
 
             if errors:
