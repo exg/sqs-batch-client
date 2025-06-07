@@ -44,10 +44,12 @@ class _EntryEnvelope:
     size: int = field(init=False)
 
     def __post_init__(self) -> None:
-        self.size = len(self.entry["MessageBody"].encode()) + sum(
-            len(k) + len(v["DataType"]) + len(v.get("BinaryValue", b"")) + len(v.get("StringValue", "").encode())
-            for k, v in self.entry.get("MessageAttributes", {}).items()
-        )
+        self.size = len(self.entry["MessageBody"].encode())
+        for k, v in self.entry.get("MessageAttributes", {}).items():
+            binary_value = v.get("BinaryValue", b"")
+            string_value = v.get("StringValue", "")
+            assert isinstance(binary_value, (str, bytes))
+            self.size += len(k) + len(v["DataType"]) + len(binary_value) + len(string_value.encode())
 
 
 class SQSBatchClientSendResults(TypedDict):
