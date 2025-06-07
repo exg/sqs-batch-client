@@ -14,7 +14,7 @@ async def test_send(queue):
         {
             "Id": str(uuid.uuid4()),
             "MessageBody": "message",
-            "MessageGroupId": "",
+            "DelaySeconds": 901,
         }
         for i in range(20)
     ]

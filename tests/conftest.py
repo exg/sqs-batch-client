@@ -9,7 +9,7 @@ os.environ["AWS_DEFAULT_REGION"] = "eu-west-1"
 
 @pytest.fixture(scope="session", autouse=True)
 def aws_mock():
-    with moto.mock_sqs():
+    with moto.mock_aws():
         yield
 
 
